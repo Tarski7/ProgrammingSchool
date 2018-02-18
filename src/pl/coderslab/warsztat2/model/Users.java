@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -66,6 +67,7 @@ public class Users {
 		return id;
 	}
 	
+	//	Zapisanie użytkownika do bazy danych, jeśli jego id!=0 to modyfikujemy jego dane
 	public void save(Connection conn) throws SQLException {
 		if (this.id == 0) {
 			final String[] generatedKeys = {"id"};
@@ -97,6 +99,7 @@ public class Users {
 		}
 	}
 	
+	//	Wczytanie użytkownika z bazy danych po Id
 	public static Users getById(int id, Connection conn) throws SQLException {
 		Users user = null;
 		if (id > 0) {
@@ -117,6 +120,26 @@ public class Users {
 			ps.close();
 		}
 		return user;
+	}
+	
+	//	Metoda wczytująca wiele obiektów z bazy danych
+	public static Users[] loadAllUsers(Connection conn) throws SQLException {
+		ArrayList<Users> users = new ArrayList<Users>();
+		String sql = "SELECT * FROM users;";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			Users user = new Users();
+			user.id = rs.getInt("id");
+			user.username = rs.getString("username");
+			user.email = rs.getString("email");
+			user.password = rs.getString("password");
+			user.personGroupId = rs.getInt("person_group_id");
+			users.add(user);
+		}
+		Users[] uArray = new Users[users.size()];
+		uArray = users.toArray(uArray);
+		return uArray;
 	}
 
 	@Override
