@@ -15,10 +15,17 @@ public class UsersApp {
 			//testSave(conn);
 			//testGetById(conn);
 			testLoadAllUsers(conn);
+			//testDelete(conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
+	}
+	
+	private static void testDelete(Connection conn) throws SQLException {
+		Users user = Users.getById(2, conn);
+		user.delete(conn);
+		System.out.println("Usunięto użytkownika!");
 	}
 	
 	private static void testLoadAllUsers(Connection conn) throws SQLException {
@@ -28,17 +35,19 @@ public class UsersApp {
 	}
 
 	private static void testSave(Connection conn) throws SQLException {
-		Users user = new Users("Maciek", "mkotek@gmail.pl", "kotek");
-		user.save(conn);
-		Users user2 = new Users("Maciek2", "mkotek2@gmail.pl", "kotek2");
-		user2.save(conn);
-		user2.setEmail("mkotek222@gmail.pl");
-		user2.save(conn);
+		//Users user = new Users("Maciek", "mkotek@gmail.pl", "kotek");
+		//user.save(conn);
+		//Users user2 = new Users("Maciek2", "mkotek2@gmail.pl", "kotek2");
+		//user2.save(conn);
+		//user2.setEmail("mkotek222@gmail.pl");
+		//user2.save(conn);*/
+		//Users user = new Users("Pudzian", "pudzianband@gmail.pl", "dominator");
+		//user.save(conn);
 		System.out.println("finished");
 	}
 	
 	private static void testGetById(Connection conn) throws SQLException {
-		Users user = Users.getById(1, conn);
+		Users user = Users.getById(2, conn);
 		System.out.println(user);
 	}
 

@@ -141,6 +141,16 @@ public class Users {
 		uArray = users.toArray(uArray);
 		return uArray;
 	}
+	
+	public void delete(Connection conn) throws SQLException {
+		if (this.id != 0) {
+			String sql = "DELETE FROM users WHERE id=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, this.id);
+			ps.executeUpdate();
+			this.id = 0;
+		}
+	}
 
 	@Override
 	public String toString() {
