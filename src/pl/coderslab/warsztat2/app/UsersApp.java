@@ -13,7 +13,7 @@ public class UsersApp {
 		//test();
 		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/krks02_warsztat2?useSSL=false", "root", "coderslab")) {
 			//testSave(conn);
-			//testGetById(conn);
+			testGetById(conn);
 			//testLoadAllUsers(conn);
 			//testDelete(conn);
 		} catch (SQLException e) {

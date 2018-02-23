@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class UserGroup {
 
@@ -52,6 +53,58 @@ public class UserGroup {
 			ps.executeUpdate();
 			ps.close();
 		}
+	}
+	
+	//	Wczytanie użytkownika z bazy danych po Id
+	public static UserGroup getById(int id, Connection conn) throws SQLException {
+		UserGroup userGroup = null;
+		if (id > 0) {
+			final String sql = "SELECT id, name "
+					+ "FROM user_group WHERE id=?;";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				userGroup = new UserGroup();
+				userGroup.id = rs.getInt("id");
+				userGroup.name = rs.getString("name");
+			}
+			rs.close();
+			ps.close();
+		}
+		return userGroup;
+	}
+	
+	//	Metoda wczytująca wiele obiektów z bazy danych
+	public static UserGroup[] loadAllUserGroup(Connection conn) throws SQLException {
+		ArrayList<UserGroup> listUserGroup = new ArrayList<UserGroup>();
+		String sql = "SELECT * FROM user_group;";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			UserGroup userGroup = new UserGroup();
+			userGroup.id = rs.getInt("id");
+			userGroup.name = rs.getString("name");
+			listUserGroup.add(userGroup);
+		}
+		UserGroup[] uArray = new UserGroup[listUserGroup.size()];
+		uArray = listUserGroup.toArray(uArray);
+		return uArray;
+	}
+	
+	public void delete(Connection conn) throws SQLException {
+		if (this.id != 0) {
+			String sql = "DELETE FROM user_group WHERE id=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, this.id);
+			ps.executeUpdate();
+			this.id = 0;
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return "UserGroup [id=" + id + ", name=" + name + "]";
 	}
 	
 }
