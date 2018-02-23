@@ -14,16 +14,17 @@ public class Users {
 	private String username = "";
 	private String email = "";
 	private String password = "";
-	private int personGroupId = 0;
+	private int personGroupId;
 	
 	public Users() {
 		
 	}
 	
-	public Users(String username, String email, String password) {
+	public Users(String username, String email, String password, int personGroupId) {
 		this.username = username;
 		this.email = email;
 		setPassword(password);
+		this.personGroupId = personGroupId;
 	}
 
 	public String getUsername() {

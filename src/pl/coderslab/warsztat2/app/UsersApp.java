@@ -14,7 +14,7 @@ public class UsersApp {
 		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/krks02_warsztat2?useSSL=false", "root", "coderslab")) {
 			//testSave(conn);
 			//testGetById(conn);
-			testLoadAllUsers(conn);
+			//testLoadAllUsers(conn);
 			//testDelete(conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -35,24 +35,25 @@ public class UsersApp {
 	}
 
 	private static void testSave(Connection conn) throws SQLException {
-		//Users user = new Users("Maciek", "mkotek@gmail.pl", "kotek");
+		//Users user = new Users("Maciek", "mkotek@gmail.pl", "kotek", 1);
 		//user.save(conn);
-		//Users user2 = new Users("Maciek2", "mkotek2@gmail.pl", "kotek2");
-		//user2.save(conn);
-		//user2.setEmail("mkotek222@gmail.pl");
-		//user2.save(conn);*/
-		//Users user = new Users("Pudzian", "pudzianband@gmail.pl", "dominator");
+		//user.setEmail("mkotek222@gmail.pl");
+		//Users user = new Users("Pudzian", "pudzianband@gmail.pl", "dominator", 2);
 		//user.save(conn);
-		System.out.println("finished");
+		//Users user = new Users("Daniel Andre Tande", "danandtan@gmail.no", "danielek", 2);
+		//user.save(conn);
+		//Users user = new Users("Krzysztof Ibisz", "ibisz2000@gmail.pl", "ibiszek", 1);
+		//user.save(conn);
+		System.out.println("Zapisano użytkownika!");
 	}
 	
 	private static void testGetById(Connection conn) throws SQLException {
-		Users user = Users.getById(2, conn);
+		Users user = Users.getById(4, conn);
 		System.out.println(user);
 	}
 
 	static void test() {
-		Users user = new Users("Maciek", "mkotek@gmail.pl", "kotek");
+		Users user = new Users("Maciek", "mkotek@gmail.pl", "kotek", 1);
 		System.out.println(user.getPassword());
 		System.out.println(user.isPasswordCorrect("kote"));
 		System.out.println(user.isPasswordCorrect("kotek"));
