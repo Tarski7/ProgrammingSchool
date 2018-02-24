@@ -55,7 +55,7 @@ public class UserGroup {
 		}
 	}
 	
-	//	Wczytanie użytkownika z bazy danych po Id
+	//	Wczytanie grupy z bazy danych po Id
 	public static UserGroup getById(int id, Connection conn) throws SQLException {
 		UserGroup userGroup = null;
 		if (id > 0) {

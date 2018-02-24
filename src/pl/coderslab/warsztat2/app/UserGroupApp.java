@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import pl.coderslab.warsztat2.model.UserGroup;
-import pl.coderslab.warsztat2.model.Users;
 
 public class UserGroupApp {
 
