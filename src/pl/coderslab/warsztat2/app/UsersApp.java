@@ -3,7 +3,6 @@ package pl.coderslab.warsztat2.app;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 import pl.coderslab.warsztat2.model.Users;
 
@@ -13,9 +12,10 @@ public class UsersApp {
 		//test();
 		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/krks02_warsztat2?useSSL=false", "root", "coderslab")) {
 			//testSave(conn);
-			testGetById(conn);
+			//testGetById(conn);
 			//testLoadAllUsers(conn);
 			//testDelete(conn);
+			testLoadAllByGroupId(conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -50,6 +50,12 @@ public class UsersApp {
 	private static void testGetById(Connection conn) throws SQLException {
 		Users user = Users.getById(4, conn);
 		System.out.println(user);
+	}
+	
+	private static void testLoadAllByGroupId(Connection conn) throws SQLException {
+		Users[] users = Users.loadAllByGroupId(1, conn);
+		for (Users u : users)
+			System.out.println(u);
 	}
 
 	static void test() {

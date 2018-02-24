@@ -78,8 +78,8 @@ public class Solution {
 			final String sql = "INSERT INTO solution(id, created, updated, description, excercise_id, users_id) "
 					+ "VALUES(default, ?, ?, ?, ?, ?);";
 			PreparedStatement ps = conn.prepareStatement(sql, generatedKeys);
-			ps.setDate(1, new java.sql.Date(this.created.getTime()));
-			ps.setDate(2, new java.sql.Date(this.created.getTime()));
+			ps.setDate(1, new java.sql.Date (this.created.getTime()));
+			ps.setDate(2, new java.sql.Date (this.updated.getTime()));
 			ps.setString(3, this.description);
 			ps.setInt(4, this.excerciseId);
 			ps.setInt(5, this.usersId);
@@ -91,15 +91,14 @@ public class Solution {
 			rs.close();
 			ps.close();
 		} else {
-			final String sql = "UPDATE solution SET created=?, updated=?, description=?, excercise_id=? "
+			final String sql = "UPDATE solution SET updated=?, description=?, excercise_id=? "
 					+ " users_id=? WHERE id=?;";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setDate(1, new java.sql.Date(this.created.getTime()));
-			ps.setDate(2, new java.sql.Date(this.updated.getTime()));
-			ps.setString(3, this.description);
-			ps.setInt(4, this.excerciseId);
-			ps.setInt(5, this.usersId);
-			ps.setInt(6, this.id);
+			ps.setDate(1, new java.sql.Date (this.updated.getTime()));
+			ps.setString(2, this.description);
+			ps.setInt(3, this.excerciseId);
+			ps.setInt(4, this.usersId);
+			ps.setInt(5, this.id);
 			ps.executeUpdate();
 			ps.close();
 		}
@@ -156,6 +155,48 @@ public class Solution {
 			ps.executeUpdate();
 			this.id = 0;
 		}
+	}
+	
+	public static Solution[] loadAllByUserId(int userId, Connection conn) throws SQLException {
+		ArrayList<Solution> solutions = new ArrayList<Solution>();
+		String sql = "SELECT * FROM solution WHERE users_id=?;";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			Solution solution = new Solution();
+			solution.id = rs.getInt("id");
+			solution.created = rs.getDate("created");
+			solution.updated = rs.getDate("updated");
+			solution.description = rs.getString("description");
+			solution.excerciseId = rs.getInt("excercise_id");
+			solution.usersId = rs.getInt("users_id");
+			solutions.add(solution);
+		}
+		Solution[] uArray = new Solution[solutions.size()];
+		uArray = solutions.toArray(uArray);
+		return uArray;
+	}
+	
+	public static Solution[] loadAllByExerciseId(int excerciseId, Connection conn) throws SQLException {
+		ArrayList<Solution> solutions = new ArrayList<Solution>();
+		String sql = "SELECT * FROM solution WHERE excercise_id=? ORDER BY created DESC;";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, excerciseId);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			Solution solution = new Solution();
+			solution.id = rs.getInt("id");
+			solution.created = rs.getDate("created");
+			solution.updated = rs.getDate("updated");
+			solution.description = rs.getString("description");
+			solution.excerciseId = rs.getInt("excercise_id");
+			solution.usersId = rs.getInt("users_id");
+			solutions.add(solution);
+		}
+		Solution[] uArray = new Solution[solutions.size()];
+		uArray = solutions.toArray(uArray);
+		return uArray;
 	}
 
 	@Override
